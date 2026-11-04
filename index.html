@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Ranjit Job Hunter</title>
+<style>
+:root{box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);
+--bg:#eceefb;--bg2:#dfe3fa;--surface:#ffffff;--ink:#151a40;--muted:#586088;--line:#ccd2ee;--accent:#3b3fd8;--accent-ink:#fff;--amber:#b86a00;--good:#12795a;--shadow:rgba(40,46,120,.22);--glass:rgba(255,255,255,.7);color-scheme:light}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0c1028;--bg2:#161c4a;--surface:#171d47;--ink:#eaedff;--muted:#a3abd6;--line:#2c3570;--accent:#ffb84d;--accent-ink:#1a1200;--amber:#ffb84d;--good:#5fe0b4;--shadow:rgba(0,0,0,.55);--glass:rgba(40,50,130,.45);color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#0c1028;--bg2:#161c4a;--surface:#171d47;--ink:#eaedff;--muted:#a3abd6;--line:#2c3570;--accent:#ffb84d;--accent-ink:#1a1200;--amber:#ffb84d;--good:#5fe0b4;--shadow:rgba(0,0,0,.55);--glass:rgba(40,50,130,.45);color-scheme:dark}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;color:var(--ink);background:var(--bg);background-image:radial-gradient(900px 500px at 85% -10%,var(--bg2),transparent),radial-gradient(700px 400px at -10% 30%,var(--bg2),transparent);font:16px/1.5 "Avenir Next","Segoe UI",system-ui,Arial,sans-serif;min-height:100vh}
+main{max-width:980px;margin:0 auto;padding:18px 16px 70px}
+.hero{display:grid;grid-template-columns:1.3fr 1fr;gap:10px;align-items:center;margin-bottom:10px}
+@media (max-width:700px){.hero{grid-template-columns:1fr}}
+h1{font-size:clamp(2rem,5vw,3rem);line-height:1.05;margin:0 0 8px;letter-spacing:-.03em;font-weight:800}
+.sub{color:var(--muted);margin:0;max-width:46ch}
+.stage{perspective:700px;height:210px;display:grid;place-items:center;position:relative}
+.cube{width:112px;height:112px;position:relative;transform-style:preserve-3d;animation:spin 20s linear infinite}
+.face{position:absolute;inset:0;display:grid;place-items:center;font-weight:800;font-size:1.05rem;border:2px solid var(--accent);background:var(--glass);color:var(--ink);border-radius:10px;backface-visibility:visible}
+.f1{transform:translateZ(56px)}.f2{transform:rotateY(180deg) translateZ(56px)}.f3{transform:rotateY(90deg) translateZ(56px)}.f4{transform:rotateY(-90deg) translateZ(56px)}.f5{transform:rotateX(90deg) translateZ(56px)}.f6{transform:rotateX(-90deg) translateZ(56px)}
+.floor{position:absolute;bottom:10px;width:130px;height:18px;border-radius:50%;background:radial-gradient(var(--shadow),transparent 70%)}
+@keyframes spin{from{transform:rotateX(-22deg) rotateY(0)}to{transform:rotateX(-22deg) rotateY(360deg)}}
+nav{display:flex;gap:8px;margin:10px 0 18px;overflow-x:auto;padding:4px 2px 10px}
+.tab{border:1px solid var(--line);background:var(--surface);color:var(--muted);border-radius:10px;padding:9px 16px;font:600 .92rem inherit;font-family:inherit;cursor:pointer;white-space:nowrap;box-shadow:0 4px 0 var(--line);transition:transform .12s,box-shadow .12s}
+.tab:active{transform:translateY(3px);box-shadow:0 1px 0 var(--line)}
+.tab[aria-selected="true"]{background:var(--accent);color:var(--accent-ink);border-color:var(--accent);box-shadow:0 4px 0 rgba(0,0,0,.3)}
+section{display:none}section.on{display:block}
+h2{font-size:1.2rem;margin:26px 0 4px;letter-spacing:-.01em}
+.meta{color:var(--muted);font-size:.9rem}
+.list{display:grid;gap:18px;perspective:1000px;margin-top:14px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:16px;box-shadow:0 1px 0 var(--line),0 14px 28px -10px var(--shadow);transform-style:preserve-3d;transition:transform .15s ease-out,box-shadow .15s}
+.tilt{display:grid;grid-template-columns:78px 1fr;gap:14px;transform:rotateX(var(--rx,0deg)) rotateY(var(--ry,0deg))}
+.tilt:hover{box-shadow:0 1px 0 var(--line),0 26px 40px -12px var(--shadow)}
+.score{transform:translateZ(34px);align-self:start;text-align:center;border-radius:14px;padding:10px 4px;background:linear-gradient(160deg,var(--accent),color-mix(in srgb,var(--accent) 55%,#000));color:var(--accent-ink);font-weight:800;font-size:1.6rem;box-shadow:0 10px 18px -6px var(--shadow)}
+.score small{display:block;font-size:.68rem;font-weight:600;opacity:.85}
+.body{transform:translateZ(14px)}
+.title{font-weight:700;font-size:1.08rem}
+.badge{display:inline-block;font-size:.76rem;font-weight:700;border-radius:99px;padding:2px 10px;border:1px solid var(--line);margin-right:6px}
+.badge.src{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+.badge.warn{color:var(--amber);border-color:var(--amber)}
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin:8px 0}
+.sk{font-size:.8rem;padding:2px 9px;border-radius:6px;border:1px solid var(--line)}
+.sk.hit{color:var(--good);border-color:var(--good)}.sk.miss{color:var(--amber);border-color:var(--amber)}
+.row{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-top:10px}
+.btn{display:inline-block;background:var(--accent);color:var(--accent-ink);border:0;border-radius:10px;padding:10px 16px;font:700 .9rem inherit;font-family:inherit;cursor:pointer;text-decoration:none;box-shadow:0 4px 0 rgba(0,0,0,.28);transition:transform .1s,box-shadow .1s}
+.btn:active{transform:translateY(3px);box-shadow:0 1px 0 rgba(0,0,0,.28)}
+.btn.alt{background:var(--surface);color:var(--ink);border:1px solid var(--line);box-shadow:0 4px 0 var(--line)}
+:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+label{display:block;font-weight:700;font-size:.85rem;margin:10px 0 4px}
+input,select,textarea{width:100%;padding:10px;border:1px solid var(--line);border-radius:10px;background:var(--bg);color:var(--ink);font:inherit}
+select{width:auto}
+textarea{min-height:80px}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:0 12px}
+@media (max-width:600px){.grid{grid-template-columns:1fr}.tilt{grid-template-columns:62px 1fr}}
+.links{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:12px;margin-top:12px}
+.pill{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:6px 6px 12px;box-shadow:0 10px 18px -10px var(--shadow)}
+.rc{border:1px solid var(--line);background:var(--surface);color:var(--ink);border-radius:99px;padding:6px 13px;font:600 .85rem inherit;font-family:inherit;cursor:pointer}
+.rc[aria-pressed="true"]{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+pre{white-space:pre-wrap;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:14px;font:.86rem/1.5 ui-monospace,Menlo,Consolas,monospace}
+.note{border-left:4px solid var(--amber);padding:8px 14px;background:var(--glass);border-radius:0 10px 10px 0;color:var(--muted);font-size:.9rem;margin:14px 0}
+.empty{color:var(--muted);padding:16px 0}
+@media (prefers-reduced-motion:reduce){.cube{animation:none;transform:rotateX(-22deg) rotateY(30deg)}.card,.tilt{transition:none}}
+</style>
+</head>
+<body>
+<main>
+<div class="hero">
+<div>
+<h1>Ranjit’s job hunter</h1>
+<p class="sub">Listings, unki requirements aur apply button ek jagah. Match score tumhari skills se nikalta hai. Apply hamesha tum khud karoge.</p>
+</div>
+<div class="stage" aria-hidden="true"><div class="cube"><div class="face f1">SQL</div><div class="face f2">Python</div><div class="face f3">Power BI</div><div class="face f4">Excel</div><div class="face f5">DAX</div><div class="face f6">ETL</div></div><div class="floor"></div></div>
+</div>
+<nav role="tablist">
+<button class="tab" role="tab" data-t="jobs" aria-selected="true">Jobs</button>
+<button class="tab" role="tab" data-t="market" aria-selected="false">Platforms</button>
+<button class="tab" role="tab" data-t="search" aria-selected="false">Search</button>
+<button class="tab" role="tab" data-t="track" aria-selected="false">Tracker</button>
+<button class="tab" role="tab" data-t="profile" aria-selected="false">My skills</button>
+</nav>
+
+<section id="jobs" class="on">
+<form id="qform" role="search" style="margin:4px 0 0"><div class="row"><input id="q" type="search" placeholder="Job search karo: data analyst, power bi, MIS..." aria-label="Search jobs" style="flex:1;min-width:200px"><select id="qloc" aria-label="Location"><option>Gurugram</option><option>Delhi NCR</option><option>Noida</option><option>Remote</option><option>India</option></select><button class="btn" type="submit">Search</button><button class="btn alt" type="button" id="qclear">Clear</button></div></form>
+<p class="meta" id="rcount"></p>
+<div id="qboards" hidden></div>
+<h2>Listings found</h2>
+<p class="meta">Snapshot: 4 Nov 2026. Sirf wahi jobs jo search me mili, experience 2-5 yrs ke aas-paas.</p>
+<div class="note">Dhyan do: inme sirf Statiq ki listing recent (15 Oct 2026) hai. Baaki Feb-Jun 2026 ki hain aur band ho sakti hain. Apply se pehle page par check kar lo ki job active hai.</div>
+<div class="list" id="jobList"></div>
+</section>
+
+<section id="market">
+<h2>Kaun si platform par kya maanga ja raha hai</h2>
+<p class="meta">Har platform ke Gurugram search pages par jo skills baar-baar dikhi. Button us platform ka search page kholta hai, wahan se individual jobs dekho.</p>
+<div class="list" id="mktList"></div>
+</section>
+
+<section id="search">
+<h2>Apna search chalao</h2>
+<div class="rcs" id="roleChips" style="display:flex;flex-wrap:wrap;gap:6px;margin-top:8px"></div>
+<div class="row"><div><label for="loc">Location</label><select id="loc"><option>Gurugram</option><option>Delhi NCR</option><option>Noida</option><option>Remote</option><option>India</option></select></div>
+<div><label for="posted">Posted in</label><select id="posted"><option value="1">24 hours</option><option value="3" selected>3 days</option><option value="7">7 days</option></select></div></div>
+<div class="links" id="boardLinks"></div>
+<div class="note">Instahyre, Cutshort, Hirist aur iimjobs pre-filled search support nahi karte, wahan homepage khulta hai.</div>
+</section>
+
+<section id="track">
+<div class="card"><strong>Job add karo</strong>
+<div class="grid">
+<div><label for="jt">Job title</label><input id="jt"></div><div><label for="jc">Company</label><input id="jc"></div>
+<div><label for="jl">Location / mode</label><input id="jl"></div><div><label for="js">Source</label><input id="js"></div>
+<div><label for="jd">Date posted</label><input id="jd" type="date"></div><div><label for="jctc">Salary / CTC</label><input id="jctc"></div>
+</div>
+<label for="jlink">Application link</label><input id="jlink" type="url" placeholder="https://">
+<label for="jsk">Required skills (comma separated)</label><input id="jsk" placeholder="SQL, Power BI, Python">
+<div class="row"><button class="btn" id="addJob">Save job</button><span class="meta" id="addMsg"></span></div></div>
+<div class="row"><label for="filt" style="margin:0">Show</label><select id="filt"></select><button class="btn alt" id="genRep">Daily report</button></div>
+<div class="list" id="trackList"></div>
+<pre id="repOut" hidden></pre>
+<div class="row"><button class="btn alt" id="copyRep" hidden>Copy report</button></div>
+</section>
+
+<section id="profile">
+<p class="meta">Match score in skills se calculate hota hai. List edit karo.</p>
+<label for="mySkills">My skills (comma separated)</label><textarea id="mySkills"></textarea>
+<div class="row"><button class="btn" id="saveSkills">Save skills</button><span class="meta" id="skMsg"></span><button class="btn alt" id="resetAll">Delete tracked jobs</button></div>
+</section>
+</main>
+
+<script>
+(function(){
+var DEF=["SQL","Python","Pandas","NumPy","Excel","VBA","Macros","Power BI","DAX","ETL","Dashboards","Reporting automation","Data quality","Pricing analytics","Claims analytics","Airflow","dbt","AWS Athena"];
+var ROLES=["Data Analyst","BI Developer","MIS Analyst","Reporting Analyst","Business Data Analyst","SQL Python Analyst","Pricing Analyst","Data Operations Analyst"];
+var STATUS=["Saved","Resume ready","Applied","Interview","Offer","Rejected"];
+var LISTINGS=[
+{t:"Data Analyst",c:"Statiq",loc:"Gurugram",src:"JobFound (aggregator)",posted:"15 Oct 2026",exp:"2+ yrs",ctc:"4-6 LPA",skills:["Power BI","SQL","Tableau","Excel","Dashboards"],note:"Dated listing page found. Business/product analysis, dashboards, trackers. Live status not confirmed.",tag:"Recent",link:"https://jobfound.org/job/statiq-is-hiring-for-data-analyst-gurugram-haryana-india-india-15-october-2026"},
+{t:"Data Analyst (Insurance Dekho)",c:"InsuranceDekho",loc:"Gurgaon",src:"Hirist",posted:"25 Mar 2026",exp:"3-5 yrs",ctc:"",skills:["SQL","Excel","Power BI","Tableau","Statistics"],note:"Role asks R/Python, trend analysis, AI/ML exposure. Old posting, may be closed. Insurance domain matches your work.",tag:"Old posting",link:"https://www.hirist.tech/j/insurancedekho-data-analyst-r-python-1623629"},
+{t:"Data Analyst",c:"Care.fi",loc:"Gurugram",src:"GetMeReferred",posted:"26 Feb 2026",exp:"0-3 yrs",ctc:"",skills:["SQL","Power BI","Dashboards"],note:"Extract and clean data with SQL, build Power BI dashboards. Old posting, may be closed.",tag:"Old posting",link:"https://getmereferred.com/job-listing/data-analyst-carefi-gurugram-to-3-years-experience-2f78cb88-f8f6-4baf-9695-2e195db4812e"},
+{t:"BA + BI Developer (Westfield)",c:"EXL Service",loc:"Gurgaon",src:"ZipRecruiter India",posted:"4 Jun 2026",exp:"3-6 yrs",ctc:"",skills:["Power BI","Data analysis","BI reporting"],note:"Build, publish and schedule Power BI reports. Old posting, may be closed.",tag:"Old posting",link:"https://www.ziprecruiter.in/jobs/540222180-ba-bi-developer-westfield-at-exlservice-holdings-inc"},
+{t:"Executive - Data Analyst, Platforms",c:"Macquarie Group",loc:"Gurugram",src:"LinkedIn",posted:"Seen as '1 week ago'",exp:"Not retrieved",ctc:"",skills:[],note:"Requirements not retrieved. Open the page and check the full JD before applying.",tag:"Lead",link:"https://in.linkedin.com/jobs/data-analyst-mis-executive-jobs"}
+];
+var MARKET=[
+{p:"Foundit",q:"MIS Analyst, Gurugram",n:"1,934 results (page dated 30 Oct 2026)",s:["MIS reporting","Power BI","Advanced Excel","SQL","Dashboard development"],l:"https://www.foundit.in/search/mis-analyst-jobs-in-gurgaon-gurugram"},
+{p:"Foundit",q:"Power BI Analyst, Gurugram",n:"144 results (page dated 27 Sep 2026)",s:["Power BI","DAX","Power Query","SQL","Python","Data modeling"],l:"https://www.foundit.in/search/power-bi-analyst-jobs-in-gurgaon-gurugram"},
+{p:"Foundit",q:"Data Analyst, Gurugram",n:"2,660 results (page dated 6 Aug 2026)",s:["SQL","Power BI","Python","Pandas","Excel","DAX","Dashboard creation"],l:"https://www.foundit.in/search/data-analyst-jobs-in-gurgaon-gurugram"},
+{p:"Glassdoor",q:"Data Analyst, Gurgaon",n:"647 results (Nov 2026 page)",s:["SQL","Advanced Excel / Sheets","Power BI or Tableau","Python (Pandas, NumPy)","KPI tracking"],l:"https://www.glassdoor.co.in/Job/gurgaon-data-analyst-jobs-SRCH_IL.0,7_IC2921225_KO8,20.htm"},
+{p:"LinkedIn",q:"Data Analyst / MIS, Gurugram",n:"175 Gurugram listings on the page seen",s:["Varies by company","Check each JD"],l:"https://in.linkedin.com/jobs/data-analyst-mis-executive-jobs"},
+{p:"Built In",q:"Data Analyst, Gurgaon",n:"Page checked Nov 2026",s:["Power BI","SQL","Python","DAX","Excel"],l:"https://builtin.com/jobs/as/india/gurgaon/data-analytics/search/data-analyst"}
+];
+var Q="";
+var S={skills:DEF.slice(),jobs:[],roles:["Data Analyst","BI Developer","MIS Analyst"]};
+try{var r=localStorage.getItem("rjh1");if(r){var p=JSON.parse(r);if(p&&p.skills)S=p;}}catch(e){}
+function save(){try{localStorage.setItem("rjh1",JSON.stringify(S));}catch(e){}}
+function $(i){return document.getElementById(i);}
+function esc(s){return String(s==null?"":s).replace(/[&<>"']/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c];});}
+function safe(u){return /^https?:\/\//i.test(u)?u:"";}
+function split(s){return s.split(",").map(function(x){return x.trim();}).filter(Boolean);}
+function score(j){var req=j.skills||[];if(!req.length)return{n:null,hit:[],miss:[]};
+var mine=S.skills.map(function(s){return s.toLowerCase();}),hit=[],miss=[];
+req.forEach(function(q){var l=q.toLowerCase();(mine.some(function(m){return m===l||m.indexOf(l)>-1||l.indexOf(m)>-1;})?hit:miss).push(q);});
+return{n:Math.round(hit.length/req.length*100),hit:hit,miss:miss};}
+function chips(s){return '<div class="chips">'+s.hit.map(function(x){return '<span class="sk hit">'+esc(x)+'</span>';}).join("")+s.miss.map(function(x){return '<span class="sk miss">'+esc(x)+'</span>';}).join("")+'</div>';}
+function scoreBox(s){return '<div class="score">'+(s.n==null?"-":s.n)+'<small>'+(s.n==null?"no data":"/100")+'</small></div>';}
+
+// tabs
+var tabs=document.querySelectorAll(".tab");
+tabs.forEach(function(t){t.addEventListener("click",function(){
+tabs.forEach(function(x){x.setAttribute("aria-selected",x===t?"true":"false");});
+document.querySelectorAll("section").forEach(function(s){s.classList.toggle("on",s.id===t.dataset.t);});
+if(t.dataset.t==="track")renderTrack();if(t.dataset.t==="jobs")renderListings();});});
+
+// tilt
+var fine=window.matchMedia&&matchMedia("(hover:hover)").matches&&!matchMedia("(prefers-reduced-motion:reduce)").matches;
+function tilt(root){if(!fine)return;root.querySelectorAll(".tilt").forEach(function(c){
+c.addEventListener("pointermove",function(e){var b=c.getBoundingClientRect();var x=(e.clientX-b.left)/b.width-.5,y=(e.clientY-b.top)/b.height-.5;c.style.setProperty("--ry",(x*8).toFixed(2)+"deg");c.style.setProperty("--rx",(-y*8).toFixed(2)+"deg");});
+c.addEventListener("pointerleave",function(){c.style.setProperty("--rx","0deg");c.style.setProperty("--ry","0deg");});});}
+
+// listings
+function tracked(j){return S.jobs.some(function(x){return x.title===j.t&&x.company===j.c;});}
+function renderListings(){
+var qs=Q.toLowerCase().split(/\s+/).filter(Boolean);
+var L=LISTINGS.map(function(j,i){return{j:j,i:i,s:score(j)};}).filter(function(x){var h=(x.j.t+" "+x.j.c+" "+x.j.loc+" "+x.j.src+" "+x.j.skills.join(" ")).toLowerCase();return qs.every(function(w){return h.indexOf(w)>-1;});}).sort(function(a,b){return (b.s.n==null?-1:b.s.n)-(a.s.n==null?-1:a.s.n);});
+$("rcount").textContent=Q?(L.length+" saved listing(s) mili “"+Q+"” ke liye."):"";
+$("jobList").innerHTML=L.map(function(x){var j=x.j,s=x.s,u=safe(j.link);
+return '<article class="card tilt">'+scoreBox(s)+'<div class="body"><div class="title">'+esc(j.t)+' <span class="meta">at '+esc(j.c)+'</span></div>'
++'<div style="margin:6px 0"><span class="badge src">'+esc(j.src)+'</span><span class="badge'+(j.tag==="Recent"?"":" warn")+'">'+esc(j.tag)+'</span></div>'
++'<div class="meta">'+esc([j.loc,j.exp,j.ctc,"Posted "+j.posted].filter(Boolean).join(" | "))+'</div>'
++(j.skills.length?'<div class="meta" style="margin-top:6px">Requirements (green = tumhare paas):</div>'+chips(s):'<div class="meta" style="margin-top:6px">Skills list available nahi.</div>')
++'<div class="meta">'+esc(j.note)+'</div>'
++'<div class="row"><a class="btn" target="_blank" rel="noopener noreferrer" href="'+esc(u)+'">Apply on '+esc(j.src.split(" ")[0])+'</a>'
++'<button class="btn alt" data-tr="'+x.i+'"'+(tracked(j)?' disabled':'')+'>'+(tracked(j)?'Tracked':'Add to tracker')+'</button></div></div></article>';}).join("");
+$("jobList").querySelectorAll("[data-tr]").forEach(function(b){b.addEventListener("click",function(){var j=LISTINGS[+b.dataset.tr];
+S.jobs.push({title:j.t,company:j.c,loc:j.loc,source:j.src,date:j.posted,ctc:j.ctc,link:j.link,skills:j.skills.slice(),status:"Saved"});save();renderListings();});});
+tilt($("jobList"));if(!L.length)$("jobList").innerHTML='<p class="empty">Saved listings me koi match nahi. Upar wale boards par search karo.</p>';renderQB();}
+
+// live search on boards
+function renderQB(){var b=$("qboards");if(!Q){b.hidden=true;return;}
+var loc=$("qloc").value,qe=encodeURIComponent(Q),le=encodeURIComponent(loc==="Remote"?"India":loc),slug=Q.toLowerCase().replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,""),ls=loc==="Gurugram"?"gurgaon":loc==="Delhi NCR"?"delhi-ncr":loc==="Remote"?"india":loc.toLowerCase();
+var B=[["LinkedIn","https://www.linkedin.com/jobs/search/?keywords="+qe+"&location="+le+"&f_TPR=r604800"+(loc==="Remote"?"&f_WT=2":"")],["Naukri","https://www.naukri.com/"+slug+"-jobs-in-"+ls+"?experience=2"],["Indeed India","https://in.indeed.com/jobs?q="+qe+"&l="+le+"&fromage=7"],["Foundit","https://www.foundit.in/srp/results?query="+qe+"&locations="+le],["Glassdoor","https://www.glassdoor.co.in/Job/jobs.htm?sc.keyword="+qe],["Google Jobs","https://www.google.com/search?ibp=htl;jobs&q="+encodeURIComponent(Q+" jobs "+loc)]];
+b.innerHTML='<div class="note">“'+esc(Q)+'” ke live results in boards par milenge (naye tab me khulta hai). Is page ke andar live jobs laana possible nahi hai.</div><div class="links">'+B.map(function(x){return '<div class="pill"><a class="btn" style="display:block;text-align:center" target="_blank" rel="noopener noreferrer" href="'+esc(x[1])+'">'+esc(x[0])+'</a></div>';}).join("")+'</div>';b.hidden=false;}
+$("qform").addEventListener("submit",function(e){e.preventDefault();Q=$("q").value.trim();renderListings();});
+$("qclear").addEventListener("click",function(){$("q").value="";Q="";renderListings();});
+$("qloc").addEventListener("change",renderQB);
+
+// market
+function renderMarket(){$("mktList").innerHTML=MARKET.map(function(m){
+return '<article class="card tilt"><div class="score" style="font-size:.95rem;padding:14px 4px">'+esc(m.p)+'</div><div class="body"><div class="title">'+esc(m.q)+'</div><div class="meta">'+esc(m.n)+'</div>'
++'<div class="meta" style="margin-top:6px">Skills jo baar-baar dikhi:</div><div class="chips">'+m.s.map(function(x){var l=x.toLowerCase();var ok=S.skills.some(function(k){var q=k.toLowerCase();return l.indexOf(q)>-1||q.indexOf(l)>-1;});return '<span class="sk '+(ok?"hit":"")+'">'+esc(x)+'</span>';}).join("")+'</div>'
++'<div class="row"><a class="btn" target="_blank" rel="noopener noreferrer" href="'+esc(m.l)+'">Open on '+esc(m.p)+'</a></div></div></article>';}).join("");tilt($("mktList"));}
+
+// search
+function renderRoles(){$("roleChips").innerHTML=ROLES.map(function(x){return '<button class="rc" aria-pressed="'+(S.roles.indexOf(x)>-1)+'" data-r="'+esc(x)+'">'+esc(x)+'</button>';}).join("");
+$("roleChips").querySelectorAll(".rc").forEach(function(c){c.addEventListener("click",function(){var x=c.dataset.r,i=S.roles.indexOf(x);if(i>-1)S.roles.splice(i,1);else S.roles.push(x);save();renderRoles();renderBoards();});});}
+function renderBoards(){var roles=S.roles.length?S.roles:["Data Analyst"],loc=$("loc").value,days=$("posted").value;
+var qe=encodeURIComponent(roles.length>1?'"'+roles.join('" OR "')+'"':roles[0]),le=encodeURIComponent(loc==="Remote"?"India":loc);
+var slug=roles[0].toLowerCase().replace(/[^a-z0-9]+/g,"-"),ls=loc==="Gurugram"?"gurgaon":loc==="Delhi NCR"?"delhi-ncr":loc==="Remote"?"india":loc.toLowerCase();
+var tpr={"1":"r86400","3":"r259200","7":"r604800"}[days];
+var B=[["LinkedIn Jobs","https://www.linkedin.com/jobs/search/?keywords="+qe+"&location="+le+"&f_TPR="+tpr+(loc==="Remote"?"&f_WT=2":"")],
+["Naukri","https://www.naukri.com/"+slug+"-jobs-in-"+ls+"?experience=2"],["Indeed India","https://in.indeed.com/jobs?q="+qe+"&l="+le+"&fromage="+days],
+["Foundit","https://www.foundit.in/srp/results?query="+qe+"&locations="+le],["Glassdoor","https://www.glassdoor.co.in/Job/jobs.htm?sc.keyword="+qe],
+["Wellfound","https://wellfound.com/role/"+slug],["Instahyre","https://www.instahyre.com/search-jobs/"],["Cutshort","https://cutshort.io/jobs"],
+["Hirist","https://www.hirist.tech/"],["iimjobs","https://www.iimjobs.com/"],["Google Jobs","https://www.google.com/search?ibp=htl;jobs&q="+encodeURIComponent(roles[0]+" jobs "+loc)]];
+$("boardLinks").innerHTML=B.map(function(b){return '<div class="pill"><a class="btn alt" style="display:block;text-align:center" target="_blank" rel="noopener noreferrer" href="'+esc(b[1])+'">'+esc(b[0])+'</a></div>';}).join("");}
+$("loc").addEventListener("change",renderBoards);$("posted").addEventListener("change",renderBoards);
+
+// tracker
+function renderTrack(){var f=$("filt"),cur=f.value||"all";
+f.innerHTML='<option value="all">All</option>'+STATUS.map(function(s){return '<option>'+s+'</option>';}).join("");f.value=cur;
+var L=S.jobs.map(function(j,i){return{j:j,i:i,s:score(j)};}).filter(function(x){return cur==="all"||x.j.status===cur;}).sort(function(a,b){return (b.s.n||0)-(a.s.n||0);});
+if(!L.length){$("trackList").innerHTML='<p class="empty">Abhi kuch track nahi ho raha. Jobs tab se “Add to tracker” dabao ya upar form bharo.</p>';return;}
+$("trackList").innerHTML=L.map(function(x){var j=x.j,s=x.s,u=safe(j.link);
+return '<article class="card tilt">'+scoreBox(s)+'<div class="body"><div class="title">'+esc(j.title)+' <span class="meta">at '+esc(j.company)+'</span></div>'
++'<div class="meta">'+esc([j.loc,j.source,j.date&&("Posted "+j.date),j.ctc].filter(Boolean).join(" | "))+'</div>'+chips(s)
++'<div class="row"><select data-st="'+x.i+'" aria-label="Status">'+STATUS.map(function(t){return '<option'+(t===j.status?' selected':'')+'>'+t+'</option>';}).join("")+'</select>'
++(u?'<a class="btn" target="_blank" rel="noopener noreferrer" href="'+esc(u)+'">Open &amp; apply</a>':'')+'<button class="btn alt" data-del="'+x.i+'">Remove</button></div></div></article>';}).join("");
+$("trackList").querySelectorAll("[data-st]").forEach(function(e){e.addEventListener("change",function(){S.jobs[+e.dataset.st].status=e.value;save();});});
+$("trackList").querySelectorAll("[data-del]").forEach(function(e){e.addEventListener("click",function(){S.jobs.splice(+e.dataset.del,1);save();renderTrack();});});
+tilt($("trackList"));}
+$("filt").addEventListener("change",renderTrack);
+$("addJob").addEventListener("click",function(){var t=$("jt").value.trim(),c=$("jc").value.trim(),l=$("jlink").value.trim();
+if(!t||!c){$("addMsg").textContent="Job title aur company zaroori hai.";return;}
+if(l&&!safe(l)){$("addMsg").textContent="Link https:// se shuru hona chahiye.";return;}
+S.jobs.push({title:t,company:c,loc:$("jl").value.trim(),source:$("js").value.trim(),date:$("jd").value,ctc:$("jctc").value.trim(),link:l,skills:split($("jsk").value),status:"Saved"});
+save();["jt","jc","jl","js","jd","jctc","jlink","jsk"].forEach(function(i){$(i).value="";});$("addMsg").textContent="Saved.";renderTrack();});
+
+// report
+$("genRep").addEventListener("click",function(){
+var d=new Date().toLocaleDateString("en-IN",{day:"numeric",month:"long",year:"numeric"});
+var a=S.jobs.map(function(j){return{j:j,s:score(j)};}).filter(function(x){return x.j.status!=="Rejected";}).sort(function(x,y){return (y.s.n||0)-(x.s.n||0);});
+var o="Daily job report - "+d+"\n\n";
+if(!a.length){o+="No tracked jobs yet.";}else{
+o+="Top jobs\n";a.slice(0,10).forEach(function(x,i){o+=(i+1)+". "+x.j.title+" - "+x.j.company+" ("+(x.s.n==null?"no score":x.s.n+"/100")+", "+x.j.status+")\n";});
+o+="\nPrioritise these 3\n";a.slice(0,3).forEach(function(x){o+="- "+x.j.title+" at "+x.j.company+(x.s.miss.length?" | resume me dikhao/seekho: "+x.s.miss.join(", "):" | strong match")+"\n";});
+var g={};a.forEach(function(x){x.s.miss.forEach(function(m){g[m]=(g[m]||0)+1;});});var k=Object.keys(g).sort(function(x,y){return g[y]-g[x];});
+o+="\nSkill gaps\n"+(k.length?k.map(function(m){return "- "+m+" ("+g[m]+" jobs)";}).join("\n"):"- None found")+"\n";
+o+="\nInterview topics\n"+(k.length?k.slice(0,5).map(function(m){return "- "+m;}).join("\n"):"- SQL joins/window functions, DAX, pandas")+"\n";}
+$("repOut").textContent=o;$("repOut").hidden=false;$("copyRep").hidden=false;});
+$("copyRep").addEventListener("click",function(){try{navigator.clipboard.writeText($("repOut").textContent);}catch(e){}});
+
+// skills
+$("mySkills").value=S.skills.join(", ");
+$("saveSkills").addEventListener("click",function(){S.skills=split($("mySkills").value);save();$("skMsg").textContent="Saved.";renderListings();renderMarket();});
+$("resetAll").addEventListener("click",function(){if(confirm("Saare tracked jobs delete karne hain?")){S.jobs=[];save();renderListings();renderTrack();}});
+
+renderListings();renderMarket();renderRoles();renderBoards();
+})();
+</script>
+</body>
+</html>
